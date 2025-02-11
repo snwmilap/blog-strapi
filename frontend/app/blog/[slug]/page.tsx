@@ -1,8 +1,21 @@
+import { Metadata } from 'next';
 import RichTextRenderer from "@/components/RichTextRenderer";
 import Image from "next/image";
 
-interface PostPageProps {
-  params: { slug: string };
+interface Post {
+  title: string;
+  content: string;
+  publishedAt: string;
+  coverImage?: {
+    url: string;
+  };
+  category: {
+    Category: string;
+  };
+}
+
+type PageParams = {
+  params: Promise<{ slug: string }>;
 }
 
 const fetchBlogPost = async (slug: string) => {
@@ -25,21 +38,34 @@ const fetchBlogPost = async (slug: string) => {
   return response.data.length > 0 ? response.data[0] : null;
 };
 
-export default async function PostPage({ params }: PostPageProps) {
-  if (!params?.slug) {
+export async function generateMetadata({ params }: PageParams): Promise<Metadata> {
+  const resolvedParams = await params;
+  const post = await fetchBlogPost(resolvedParams.slug) as Post;
+  
+  return {
+    title: post?.title || 'Blog Post',
+    description: post?.content?.substring(0, 160) || 'Blog post content',
+  };
+}
+
+export default async function PostPage({ params }: PageParams) {
+  const resolvedParams = await params;
+  
+  if (!resolvedParams?.slug) {
     return <div className="text-red-500 text-center">Invalid post slug.</div>;
   }
 
   try {
-    const post = await fetchBlogPost(params.slug);
-    const imageUrl = post.coverImage
+    const post = await fetchBlogPost(resolvedParams.slug) as Post;
+    const imageUrl = post?.coverImage
       ? `${process.env.NEXT_PUBLIC_STRAPI_API_URL}${post.coverImage.url}`
       : "/placeholder.jpg";
+
     if (!post) {
       return (
         <div className="max-w-4xl mx-auto p-6">
           <h1 className="text-2xl text-red-600">Post not found</h1>
-          <p>Unable to find post with slug: {params.slug}</p>
+          <p>Unable to find post with slug: {resolvedParams.slug}</p>
         </div>
       );
     }
@@ -50,10 +76,11 @@ export default async function PostPage({ params }: PostPageProps) {
           <article className="animate-fade-in">
             <div className="relative h-[400px] rounded-xl overflow-hidden mb-8">
               <Image
-                src={imageUrl || "/placeholder.svg"}
+                src={imageUrl}
                 alt={post.title}
-                layout="fill"
-                objectFit="cover"
+                fill
+                priority
+                style={{ objectFit: "cover" }}
                 className="brightness-75"
               />
               <div className="absolute inset-0 flex flex-col justify-end p-6">
@@ -78,13 +105,6 @@ export default async function PostPage({ params }: PostPageProps) {
             <div className="prose dark:prose-invert max-w-none animate-slide-up">
               <RichTextRenderer content={post.content} />
             </div>
-
-            {/* <div className="mt-8 flex justify-between items-center">
-              <Button variant="outline" size="sm" asChild>
-                <Link href="/">Back to Blog</Link>
-              </Button>
-              <Button variant="outline" size="sm">Share</Button>
-            </div> */}
           </article>
         </div>
       </main>
