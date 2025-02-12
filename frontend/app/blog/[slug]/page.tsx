@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
   
   return {
     title: post?.title || 'Blog Post',
-    description: post?.content?.substring(0, 160) || 'Blog post content',
+    description: typeof post?.content === 'string' ? post.content.substring(0, 160) : 'Blog post content',
   };
 }
 
