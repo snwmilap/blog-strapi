@@ -23,7 +23,7 @@ const BlogPostCard: React.FC<{ post: Post }> = ({ post }) => {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
             <span className="absolute bottom-4 left-4 z-10 inline-block bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-[10px] font-semibold px-2 py-[0.2rem] rounded-full">
-              {post.category.Category}
+              {post?.category?.Category}
             </span>
           </div>
         </Link>

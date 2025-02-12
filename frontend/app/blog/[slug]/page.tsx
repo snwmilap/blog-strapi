@@ -86,7 +86,7 @@ export default async function PostPage({ params }: PageParams) {
               <div className="absolute inset-0 flex flex-col justify-end p-6">
                 <div>
                   <span className="inline-block mb-2 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-[10px] font-semibold px-2 py-[0.2rem] rounded-full">
-                    {post.category.Category}
+                    {post?.category?.Category}
                   </span>
                 </div>
                 <h1 className="text-4xl font-bold mb-2 text-white">
