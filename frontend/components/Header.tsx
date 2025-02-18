@@ -18,7 +18,7 @@ export function Header() {
 
   return (
     <header className=" bg-white shadow-sm dark:bg-zinc-800 sticky top-0 z-40 w-full">
-      <div className="container flex h-16 items-center justify-between mx-auto px-4">
+      <div className="max-w-screen-xl flex h-16 items-center justify-between mx-auto px-4">
         <Link href="/" className="font-semibold text-2xl">
           MiniBlog
         </Link>
