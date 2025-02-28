@@ -5,7 +5,7 @@ import { Post } from "@/types";
 
 const BlogPostCard: React.FC<{ post: Post }> = ({ post }) => {
   const imageUrl = post.coverImage
-    ? `${process.env.NEXT_PUBLIC_STRAPI_API_URL}${post.coverImage.url}`
+    ? `${post.coverImage.url}`
     : "/placeholder.jpg";
 
   return (

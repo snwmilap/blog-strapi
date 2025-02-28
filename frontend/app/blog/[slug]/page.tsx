@@ -58,7 +58,7 @@ export default async function PostPage({ params }: PageParams) {
   try {
     const post = await fetchBlogPost(resolvedParams.slug) as Post;
     const imageUrl = post?.coverImage
-      ? `${process.env.NEXT_PUBLIC_STRAPI_API_URL}${post.coverImage.url}`
+      ? `${post.coverImage.url}`
       : "/placeholder.jpg";
 
     if (!post) {

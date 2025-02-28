@@ -10,7 +10,7 @@ interface HeroSectionProps {
 const HeroSection: React.FC<HeroSectionProps> = ({ post }) => {
   if (!post) return null; // Hide section if no featured post
   const imageUrl = post.coverImage
-    ? `${process.env.NEXT_PUBLIC_STRAPI_API_URL}${post.coverImage.url}`
+    ? `${post.coverImage.url}`
     : "/placeholder.jpg";
   return (
     <section className="mb-16">

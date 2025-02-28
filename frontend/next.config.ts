@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  reactStrictMode: true,
   images: {
     remotePatterns: [
       {
@@ -16,7 +17,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "blog-strapi-production-101b.up.railway.app",
+        hostname: '**.strapiapp.com',
       },
     ],
   },
