@@ -74,11 +74,11 @@ const BlogPostList: React.FC = () => {
   }
 
   return (
-    <div className="container mx-auto">
+    <div className="">
       {loading ? (
         <>
           <HeroSectionSkeleton /> {/* Skeleton for Hero Section */}
-          <ul className="grid grid-cols-3 gap-5">
+          <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             {Array.from({ length: POSTS_PER_PAGE }).map((_, index) => (
               <BlogPostSkeleton key={index} />
             ))}
@@ -87,7 +87,7 @@ const BlogPostList: React.FC = () => {
       ) : allPosts && allPosts.length > 0 ? (
         <>
           {featuredPost && <HeroSection post={featuredPost} />}
-          <ul className="grid grid-cols-3 gap-5">
+          <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             {allPosts.map((post) => (
               <BlogPostCard key={post.id} post={post} />
             ))}
